@@ -1,2 +1,2 @@
 # CargoBot
-Copy of the old CargoBot ap
+Copy of the old CargoBot app
