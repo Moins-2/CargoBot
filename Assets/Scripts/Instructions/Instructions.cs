@@ -6,7 +6,6 @@ public class Instructions : MonoBehaviour
 {
      private Canvas   canvas;
     [SerializeField]  private DragDrop  prefabDown   ;
-    [SerializeField]  private DragDrop  prefabUp     ;
     [SerializeField]  private DragDrop  prefabLeft   ;
     [SerializeField]  private DragDrop  prefabRight  ;
     [SerializeField]  private ItemSlot  prefabSlot   ;
@@ -39,12 +38,10 @@ public class Instructions : MonoBehaviour
     void createAvailableInstructions()
     {
         DragDrop down = Instantiate(prefabDown, new Vector2(3f, 3.5f), Quaternion.identity) as DragDrop;
-        DragDrop up = Instantiate(prefabUp, new Vector2(4.2f, 3.5f), Quaternion.identity) as DragDrop;
         DragDrop left = Instantiate(prefabLeft, new Vector2(5.4f, 3.5f), Quaternion.identity) as DragDrop;
         DragDrop right = Instantiate(prefabRight, new Vector2(6.6f, 3.5f), Quaternion.identity) as DragDrop;
-        DragDrop[] instructions = { down, up, left, right };
+        DragDrop[] instructions = { down, left, right };
         down.setInstruction(1);
-        up.setInstruction(2);
         left.setInstruction(3);
         right.setInstruction(4);
 

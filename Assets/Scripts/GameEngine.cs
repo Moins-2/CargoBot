@@ -61,7 +61,6 @@ public class GameEngine : MonoBehaviour
 
                 case -2:
                     //Line doesn't exist
-                    Debug.Log("End");
          
                     executing = false;
                     yield break;

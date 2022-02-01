@@ -8,17 +8,17 @@ public class Pince : MonoBehaviour
 {
         public PinceExt PinceDroite;
         public PinceExt PinceGauche;
-
+    [SerializeField] private int speed = 150;
         Vector3 tmpPosition;
         move direction;
-        bool test;
+        bool nextStep;
+    private float boxHeight = 0;
         // Start is called before the first frame update
         void Start()
         {
-            Debug.Log("Pince: Init");
             direction = move.NONE;
             tmpPosition = Vector3.negativeInfinity;
-            test = false;
+            nextStep = false;
 
         }
 
@@ -33,21 +33,35 @@ public class Pince : MonoBehaviour
             switch (direction)
             {
                 case move.DOWN:
-                    if (transform.position.y > tmpPosition.y - 2) // TODO: Replace with box detection
-                    {
-                        // Move the object to the right 1 unit/second.
-                        transform.Translate(0, -Time.deltaTime, 0);
-                    }
-                    else
-                    {
-                        endStep();
-                    }
-                    break;
+                /*   if (transform.position.y > tmpPosition.y - 600) // TODO: Replace with box detection
+                   {
+                       // Move the object to the right 1 unit/second.
+                       transform.Translate(0, -Time.deltaTime * speed, 0);
+                   }
+                   else
+                   {
+                       endStep();
+                   }*/
+                transform.Translate(0, -Time.deltaTime * speed, 0);
+
+                break;
+                case move.ADJUSTMENT:
+                   if (transform.position.y > tmpPosition.y - boxHeight) // TODO: Replace with box detection
+                   {
+                       // Move the object to the right 1 unit/second.
+                       transform.Translate(0, -Time.deltaTime * speed, 0);
+                   }
+                   else
+                   {
+                       endStep();
+                   }
+
+                break;
                 case move.GRAB:
-                    if (PinceGauche.transform.position.x < PinceDroite.transform.position.x - 1)
+                    if (PinceGauche.transform.position.x < PinceDroite.transform.position.x - 100)
                     {
-                        PinceGauche.transform.Translate(Time.deltaTime, 0, 0);
-                        PinceDroite.transform.Translate(-Time.deltaTime, 0, 0);
+                        PinceGauche.transform.Translate(Time.deltaTime * speed, 0, 0);
+                        PinceDroite.transform.Translate(-Time.deltaTime * speed, 0, 0);
                     }
                     else
                     endStep();
@@ -55,7 +69,7 @@ public class Pince : MonoBehaviour
                 case move.UP:
                     if (transform.position.y < tmpPosition.y)
                     {
-                        transform.Translate(0, Time.deltaTime, 0);
+                        transform.Translate(0, Time.deltaTime * speed, 0);
                     }
                     else
                     {
@@ -80,6 +94,11 @@ public class Pince : MonoBehaviour
                     direction = move.DOWN;
 
                     break;
+                case move.ADJUSTMENT:
+                    tmpPosition = transform.position;
+                    direction = move.ADJUSTMENT;
+
+                    break;
                 case move.UP:
                     direction = move.UP;
                     break;
@@ -92,33 +111,34 @@ public class Pince : MonoBehaviour
                 
             }
             
-        test = false;
+        nextStep = false;
         }
-        return test;
+       
+        return nextStep;
     }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Box")
+        {
+           boxHeight = collision.gameObject.GetComponent<RectTransform>().sizeDelta.y;
+            endStep();
 
+            // claw.gameObject.SendMessage("BoxDetected");
+        }
+        else if (collision.gameObject.tag == "Ground")
+        {
+            
+            endStep();
+
+            //  claw.gameObject.SendMessage("GroundDetected");
+        }
+    }
 
     private void endStep()
     {
-        test = true;
+        nextStep = true;
     }
-        private void reachBottom()
-        {
-            print("Pince: Bottom Reached");
-
-            test = true;
-        } private void reachTop()
-        {
-            print("Pince: Cieling Reached");
-
-            test = true;
-        }
-        private void grabbed()
-        {
-            print("Pince: Grabbed");
-
-            test = true;
-        }
+     
 
    }
 

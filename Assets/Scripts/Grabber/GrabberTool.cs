@@ -13,6 +13,7 @@ namespace Assets.Scripts.GrabberTool
         UP,
         DOWN,
         GRAB,
+        ADJUSTMENT,
     }
 
 }

@@ -53,6 +53,7 @@
     <UnityVersion>2020.3.25f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Assets\clawPanel.cs" />
     <Compile Include="Assets\Scripts\Grabber\Grabber.cs" />
     <Compile Include="Assets\Scripts\Grabber\GrabberTool.cs" />
     <Compile Include="Assets\Scripts\Grabber\PinceExt.cs" />
@@ -63,7 +64,7 @@
     <Compile Include="Assets\Scripts\Instructions\Instructions.cs" />
     <Compile Include="Assets\Scripts\GameEngine.cs" />
     <Compile Include="Assets\Scripts\Grabber\Pince.cs" />
-    <Compile Include="Assets\clawPanel.cs" />
+    <Compile Include="Assets\topGrab.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
