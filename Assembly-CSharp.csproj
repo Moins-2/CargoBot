@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{55B95B4D-4EC8-BE8C-E22B-8189B3BE9C09}</ProjectGuid>
+    <ProjectGuid>{0F83C06D-3C89-FFFE-8F2C-D28B1B8646E7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -63,6 +63,7 @@
     <Compile Include="Assets\Scripts\Instructions\Instructions.cs" />
     <Compile Include="Assets\Scripts\GameEngine.cs" />
     <Compile Include="Assets\Scripts\Grabber\Pince.cs" />
+    <Compile Include="Assets\clawPanel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

@@ -15,7 +15,6 @@ public class GameEngine : MonoBehaviour
     public void execute()
     {
         executing = true;
-        Debug.Log("Executing -> true");
     }
     private void Update()
     {
@@ -36,19 +35,15 @@ public class GameEngine : MonoBehaviour
                     yield return null;
                     break;
                 case 1:
-                    Debug.Log("Down");
                     grabber.Down();
                     break;
                 case 2:
-                    Debug.Log("up");
                     grabber.Up();
                     break;
                 case 3:
-                    Debug.Log("Left");
                     grabber.Left();
                     break;
                 case 4:
-                    Debug.Log("Right");
                     grabber.Right();
                     break;
                 case 10:

@@ -22,7 +22,7 @@ public class ItemSlot : MonoBehaviour, IDropHandler
 
     public int getInstruction()
     {
-        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(GetComponent<RectTransform>().position, .5f);
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(GetComponent<RectTransform>().position, .3f);
        
         if( hitColliders.Length == 0)
         {
