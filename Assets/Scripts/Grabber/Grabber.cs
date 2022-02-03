@@ -17,6 +17,10 @@ public class Grabber : MonoBehaviour
 
     private move direction;
 
+    private bool boxCatched = false;
+    private bool groundTouched = false;
+    private bool boxTouched = false;
+
 
     // Start is called before the first frame update
     void Start()
@@ -85,21 +89,24 @@ public class Grabber : MonoBehaviour
                     NextMove();
                 }
                 break;
-            case move.UP:
-                if (pince.movePince(direction))
-                {
-                    NextMove();
-                }
-                break;
+            
 
             case move.DOWN:
-                if (pince.movePince(direction))
+                if (boxTouched || pince.movePince(direction))
                 {
                     tmpPosition = transform.position;
                     direction = move.ADJUSTMENT;
-                }
+                    boxTouched = false;
 
+                }
+                else if (groundTouched || pince.movePince(direction))
+                {
+                    tmpPosition = transform.position;
+                    direction = move.UNGRAB;
+                    groundTouched = false;
+                }
                 break;
+      
             case move.ADJUSTMENT:
                 if (pince.movePince(direction))
                 {
@@ -109,10 +116,25 @@ public class Grabber : MonoBehaviour
 
                 break;
             case move.GRAB:
+                if (boxCatched || pince.movePince(direction))
+                {
+                    tmpPosition = transform.position;
+                    direction = move.UP;
+                    boxCatched = false;
+
+                }
+                break;
+            case move.UNGRAB:
                 if (pince.movePince(direction))
                 {
                     tmpPosition = transform.position;
                     direction = move.UP;
+                }
+                break;
+            case move.UP:
+                if (pince.movePince(direction))
+                {
+                    NextMove();
                 }
                 break;
             default:
@@ -122,6 +144,19 @@ public class Grabber : MonoBehaviour
 
 
     }
+
+    private void BoxTouched()
+    {
+        boxTouched = true;
+    }  private void BoxCatched()
+    {
+        boxCatched = true;
+    }
+    private void GroundTouched()
+    {
+        groundTouched = true;
+    }
+
     void NextMove()
     {
 

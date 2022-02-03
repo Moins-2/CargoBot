@@ -53,10 +53,36 @@ public class Pince : MonoBehaviour
 
                 break;
             case move.ADJUSTMENT:
+              
+
                 if (transform.position.y > tmpPosition.y - boxHeight) // TODO: Replace with box detection
                 {
                     // Move the object to the right 1 unit/second.
                     transform.Translate(0, -Time.deltaTime * speed, 0);
+                }
+                else
+                {
+                    endStep();
+                }
+
+                break;
+            case move.UNGRAB:
+                if (box)
+                {
+                    box.gameObject.transform.SetParent(GameObject.Find("boxes").transform);
+                }
+                if (!PinceDroite.isAtOriginalPos() && !PinceGauche.isAtOriginalPos())
+                {
+                    PinceGauche.transform.Translate(-Time.deltaTime * speed, 0, 0);
+                    PinceDroite.transform.Translate(Time.deltaTime * speed, 0, 0);
+                }
+                else if (!PinceDroite.isAtOriginalPos())
+                {
+                    PinceDroite.transform.Translate(Time.deltaTime * speed, 0, 0);
+                }
+                else if (!PinceGauche.isAtOriginalPos())
+                {
+                    PinceGauche.transform.Translate(-Time.deltaTime * speed, 0, 0);
                 }
                 else
                 {
@@ -94,6 +120,11 @@ public class Pince : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Change the direction of the "Pince" if it's different that the one it already has
+    /// </summary>
+    /// <param name="type">direction of the movement</param>
+    /// <returns>true: the movement is finished | false: the movement is running</returns>
     public bool movePince(move type)
     {
 
@@ -115,6 +146,9 @@ public class Pince : MonoBehaviour
                     break;
                 case move.GRAB:
                     direction = move.GRAB;
+                    break; 
+                case move.UNGRAB:
+                    direction = move.UNGRAB;
                     break;
                 default:
                     direction = move.NONE;
@@ -125,25 +159,31 @@ public class Pince : MonoBehaviour
             nextStep = false;
         }
 
-        return nextStep;
+        return nextStep;  
     }
 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (direction == move.DOWN && collision.gameObject.GetComponent<PinceExt>() == null)
+        Debug.Log("Collision");
+
+        if (direction == move.DOWN)
         {
             if (collision.gameObject.tag == "Box")
             {
                 boxHeight = collision.gameObject.GetComponent<RectTransform>().sizeDelta.y;
-                endStep();
+                this.SendMessageUpwards("BoxTouched");
+
+               // endStep();
 
                 // claw.gameObject.SendMessage("BoxDetected");
             }
             else if (collision.gameObject.tag == "Ground")
             {
+                Debug.Log("GROUND!!!!!!!!!!!");
+                this.SendMessageUpwards("GroundTouched");
 
-                endStep();
+                //endStep();
 
                 //  claw.gameObject.SendMessage("GroundDetected");
             }
@@ -165,9 +205,8 @@ public class Pince : MonoBehaviour
         box.gameObject.transform.SetParent(this.transform);
         box.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
 
-        endStep();
-        nbSideTouching = 0;
-
+        this.SendMessageUpwards("BoxCatched");
+      //  endStep();
 
     }
     private void endStep()

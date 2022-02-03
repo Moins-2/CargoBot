@@ -14,6 +14,7 @@ namespace Assets.Scripts.GrabberTool
         DOWN,
         GRAB,
         ADJUSTMENT,
+        UNGRAB,
     }
 
 }
