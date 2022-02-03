@@ -8,98 +8,98 @@ using Assets.Scripts.GrabberTool;
 
 
 public class Grabber : MonoBehaviour
-    {
+{
 
 
-        public Pince pince;
+    public Pince pince;
     [SerializeField] private int speed;
-        Vector3 tmpPosition;
+    Vector3 tmpPosition;
 
-        private move direction;
+    private move direction;
 
 
-        // Start is called before the first frame update
-        void Start()
-        {
-            tmpPosition = Vector3.negativeInfinity;
-            direction = move.NONE;
+    // Start is called before the first frame update
+    void Start()
+    {
+        tmpPosition = Vector3.negativeInfinity;
+        direction = move.NONE;
 
-        }
+    }
     public void Down()
     {
-        direction = move.DOWN;  
+        direction = move.DOWN;
     }
     public void Left()
     {
-        direction = move.LEFT;  
+        direction = move.LEFT;
     }
     public void Up()
     {
-        direction = move.UP;  
+        direction = move.UP;
     }
     public void Right()
     {
-        direction = move.RIGHT;  
+        direction = move.RIGHT;
     }
     public bool isReady()
     {
         return direction == move.NONE ? true : false;
     }
 
-        // Update is called once per frame
-        void Update()
+    // Update is called once per frame
+    void Update()
+    {
+        Move();
+    }
+    void Move()
+    {
+
+        if (direction != move.NONE && tmpPosition.Equals(Vector3.negativeInfinity))
         {
-            Move();
+            tmpPosition = transform.position;
         }
-        void Move()
+        switch (direction)
         {
+            case move.RIGHT:
+                if (transform.position.x < tmpPosition.x + 200)
+                {
+                    // Move the object to the right 1 unit/second.
+                    transform.Translate(Time.deltaTime * speed, 0, 0);
+                }
+                else
+                {
+                    tmpPosition = Vector3.negativeInfinity;
+                    NextMove();
+                }
+                break;
+            case move.LEFT:
 
-            if (direction != move.NONE && tmpPosition.Equals(Vector3.negativeInfinity))
-            {
-                tmpPosition = transform.position;
-            }
-            switch (direction)
-            {
-                case move.RIGHT:
-                    if (transform.position.x < tmpPosition.x + 200)
-                    {
-                        // Move the object to the right 1 unit/second.
-                        transform.Translate(Time.deltaTime * speed, 0, 0);
-                    }
-                    else
-                    {
-                        tmpPosition = Vector3.negativeInfinity;
-                        NextMove();
-                    }
-                    break;
-                case move.LEFT:
+                if (transform.position.x > tmpPosition.x - 200)
+                {
+                    // Move the object to the left 1 unit/second.
+                    transform.Translate(-Time.deltaTime * speed, 0, 0);
+                }
+                else
+                {
+                    tmpPosition = Vector3.negativeInfinity;
+                    NextMove();
+                }
+                break;
+            case move.UP:
+                if (pince.movePince(direction))
+                {
+                    NextMove();
+                }
+                break;
 
-                    if (transform.position.x > tmpPosition.x - 200)
-                    {
-                        // Move the object to the left 1 unit/second.
-                        transform.Translate(-Time.deltaTime * speed, 0, 0);
-                    }
-                    else
-                    {
-                        tmpPosition = Vector3.negativeInfinity;
-                        NextMove();
-                    }
-                    break;
-                case move.UP:
-                    if (pince.movePince(direction))
-                    {
-                        NextMove();
-                    }
-                    break;
+            case move.DOWN:
+                if (pince.movePince(direction))
+                {
+                    tmpPosition = transform.position;
+                    direction = move.ADJUSTMENT;
+                }
 
-                case move.DOWN:
-                    if (pince.movePince(direction) )
-                    {
-                        tmpPosition = transform.position;
-                        direction = move.ADJUSTMENT;
-                    }
-
-                    break;
+                break;
             case move.ADJUSTMENT:
                 if (pince.movePince(direction))
                 {
@@ -109,23 +109,23 @@ public class Grabber : MonoBehaviour
 
                 break;
             case move.GRAB:
-                    if (pince.movePince(direction))
-                    {
-                        tmpPosition = transform.position;
-                        direction = move.UP;
-                    }
-                    break;
-                default:
-                    break;
-            }
-
-
-
+                if (pince.movePince(direction))
+                {
+                    tmpPosition = transform.position;
+                    direction = move.UP;
+                }
+                break;
+            default:
+                break;
         }
-        void NextMove()
-        {
-        
-            direction = move.NONE;
-        }
+
+
+
     }
+    void NextMove()
+    {
+
+        direction = move.NONE;
+    }
+}
 

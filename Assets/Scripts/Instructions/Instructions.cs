@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Instructions : MonoBehaviour
 {
-     private Canvas   canvas;
-    [SerializeField]  private DragDrop  prefabDown   ;
-    [SerializeField]  private DragDrop  prefabLeft   ;
-    [SerializeField]  private DragDrop  prefabRight  ;
-    [SerializeField]  private ItemSlot  prefabSlot   ;
+    private Canvas canvas;
+    [SerializeField] private DragDrop prefabDown;
+    [SerializeField] private DragDrop prefabLeft;
+    [SerializeField] private DragDrop prefabRight;
+    [SerializeField] private ItemSlot prefabSlot;
     private ItemSlot[][] program;
     private float slotSize;
     private float instructionSize;
@@ -29,9 +29,9 @@ public class Instructions : MonoBehaviour
         instructionSize = slotSize * 0.8f;
     }
     // Start is called efore the first frame update
-    void Start()       
+    void Start()
     {
-        
+
         createAvailableInstructions();
         createSlot();
     }
@@ -49,7 +49,7 @@ public class Instructions : MonoBehaviour
         int index = 1;
         foreach (DragDrop instruction in instructions)
         {
-           instruction.GetComponent<RectTransform>().position = new Vector2(availablePanel.GetComponent<RectTransform>().position.x - (((instructions.Length+1)/2) * instructionSize*1.5f) + index * instructionSize * 1.5f, availablePanel.GetComponent<RectTransform>().position.y - (availablePanel.GetComponent<RectTransform>().sizeDelta.y )/2);
+            instruction.GetComponent<RectTransform>().position = new Vector2(availablePanel.GetComponent<RectTransform>().position.x - (((instructions.Length + 1) / 2) * instructionSize * 1.5f) + index * instructionSize * 1.5f, availablePanel.GetComponent<RectTransform>().position.y - (availablePanel.GetComponent<RectTransform>().sizeDelta.y) / 2);
             instruction.GetComponent<RectTransform>().sizeDelta = new Vector2(instructionSize, instructionSize);
             instruction.transform.SetParent(availablePanel.transform);
             instruction.canvas = canvas;
@@ -59,8 +59,8 @@ public class Instructions : MonoBehaviour
 
     void createSlot()
     {
-        float x = programPanel.GetComponent<RectTransform>().position.x - programPanel.GetComponent<RectTransform>().rect.size.x /2 + slotSize;
-        float y= programPanel.GetComponent<RectTransform>().position.y + (programPanel.GetComponent<RectTransform>().sizeDelta.y/2) - slotSize;
+        float x = programPanel.GetComponent<RectTransform>().position.x - programPanel.GetComponent<RectTransform>().rect.size.x / 2 + slotSize;
+        float y = programPanel.GetComponent<RectTransform>().position.y + (programPanel.GetComponent<RectTransform>().sizeDelta.y / 2) - slotSize;
         float varX, varY;
         program = new ItemSlot[4][];
         for (int j = 0; j < 4; j++)
@@ -69,7 +69,7 @@ public class Instructions : MonoBehaviour
             varY = y - j * 1.3f * slotSize;
             for (int i = 0; i < nb[j]; i++)
             {
-                varX = x + i * 1.1f*slotSize;
+                varX = x + i * 1.1f * slotSize;
 
                 program[j][i] = Instantiate(prefabSlot, new Vector2(varX, varY), Quaternion.identity);
                 program[j][i].GetComponent<RectTransform>().sizeDelta = new Vector2(slotSize, slotSize);
@@ -84,12 +84,12 @@ public class Instructions : MonoBehaviour
         step--;
 
         // Line doesn't exist
-        if (line<0 || line >= program.Length)
+        if (line < 0 || line >= program.Length)
         {
-            return -2; 
+            return -2;
         }
         // Step doesn't exist
-        else if( step < 0 || step >= program[line].Length)
+        else if (step < 0 || step >= program[line].Length)
         {
             return -1;
         }
@@ -97,5 +97,5 @@ public class Instructions : MonoBehaviour
         return program[line][step].getInstruction();
 
     }
-  
+
 }

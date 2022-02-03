@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 public class ItemSlot : MonoBehaviour, IDropHandler
 {
-    
+
     public void OnDrop(PointerEventData eventData)
     {
 
@@ -22,8 +22,8 @@ public class ItemSlot : MonoBehaviour, IDropHandler
     public int getInstruction()
     {
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(GetComponent<RectTransform>().position, .3f);
-       
-        if( hitColliders.Length == 0)
+
+        if (hitColliders.Length == 0)
         {
             //There is nothing
             return 0;
@@ -33,10 +33,10 @@ public class ItemSlot : MonoBehaviour, IDropHandler
             throw new System.Exception("Too much instruction on the slot");
         }
 
-        
-           return hitColliders[0].GetComponent<DragDrop>().getInstruction();
-            
-        
+
+        return hitColliders[0].GetComponent<DragDrop>().getInstruction();
+
+
 
     }
 }

@@ -20,7 +20,7 @@ public class GameEngine : MonoBehaviour
     {
         if (executing)
         {
-          StartCoroutine( Play(1, 1));
+            StartCoroutine(Play(1, 1));
             executing = false;
         }
     }
@@ -51,17 +51,17 @@ public class GameEngine : MonoBehaviour
                 case 30:
                 case 40:
                     //Play the line concerned
-                   StartCoroutine( Play(program.getInstruction(line, step) / 10, 1));
+                    StartCoroutine(Play(program.getInstruction(line, step) / 10, 1));
 
                     break;
                 case -1:
                     //Step doesn't exist, end of the line, return
-                    
+
                     yield break;
 
                 case -2:
                     //Line doesn't exist
-         
+
                     executing = false;
                     yield break;
 
@@ -71,11 +71,11 @@ public class GameEngine : MonoBehaviour
             }
 
         }
-        
+
         while (!grabber.isReady())
         {
             yield return null;
         }
-          StartCoroutine( Play(line, step+1));
+        StartCoroutine(Play(line, step + 1));
     }
 }
