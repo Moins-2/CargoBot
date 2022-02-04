@@ -348,7 +348,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b60eaf03542679e4fb552dde84fd78c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  marge: 5
+  marge: 10
 --- !u!114 &292288814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -464,7 +464,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pince: {fileID: 480326234}
-  speed: 38
+  speed: 139
 --- !u!224 &393234105
 RectTransform:
   m_ObjectHideFlags: 0
@@ -993,7 +993,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b60eaf03542679e4fb552dde84fd78c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  marge: 5
+  marge: 10
 --- !u!61 &1227586855
 BoxCollider2D:
   m_ObjectHideFlags: 0

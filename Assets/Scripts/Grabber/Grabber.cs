@@ -20,6 +20,7 @@ public class Grabber : MonoBehaviour
     private bool boxCatched = false;
     private bool groundTouched = false;
     private bool boxTouched = false;
+    private bool nothingCatched = false;
 
 
     // Start is called before the first frame update
@@ -102,7 +103,7 @@ public class Grabber : MonoBehaviour
                 else if (groundTouched || pince.movePince(direction))
                 {
                     tmpPosition = transform.position;
-                    direction = move.UNGRAB;
+                    direction = (boxCatched) ?   move.UNGRAB : move.GRAB;
                     groundTouched = false;
                 }
                 break;
@@ -120,6 +121,11 @@ public class Grabber : MonoBehaviour
                 {
                     tmpPosition = transform.position;
                     direction = move.UP;
+
+                } else if (nothingCatched || pince.movePince(direction))
+                {
+                    tmpPosition = transform.position;
+                    direction = move.UNGRAB;
                     boxCatched = false;
 
                 }
@@ -130,6 +136,9 @@ public class Grabber : MonoBehaviour
                     tmpPosition = transform.position;
                     direction = move.UP;
                 }
+                nothingCatched = false;
+                boxCatched = false;
+
                 break;
             case move.UP:
                 if (pince.movePince(direction))
@@ -140,15 +149,18 @@ public class Grabber : MonoBehaviour
             default:
                 break;
         }
-
-
-
     }
+
 
     private void BoxTouched()
     {
         boxTouched = true;
-    }  private void BoxCatched()
+    } 
+    private void NothingCatched()
+    {
+        nothingCatched = true;
+    }
+    private void BoxCatched()
     {
         boxCatched = true;
     }

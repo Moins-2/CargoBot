@@ -91,15 +91,18 @@ public class Pince : MonoBehaviour
 
                 break;
             case move.GRAB:
-                if (PinceGauche.transform.position.x < PinceDroite.transform.position.x - 50)  // -100 : nothing is smaller than 100 
+                if (PinceGauche.transform.position.x < PinceDroite.transform.position.x - 75)  // -75 : nothing is smaller than 75 
                 {
                     PinceGauche.transform.Translate(Time.deltaTime * speed, 0, 0);
                     PinceDroite.transform.Translate(-Time.deltaTime * speed, 0, 0);
                 }
                 else
                 {
-                    //Nothing Catch
-                    endStep();
+                    //Nothing Catched
+
+                    this.SendMessageUpwards("NothingCatched");
+
+                  //  endStep();
 
                 }
                 break;
