@@ -8,7 +8,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     private RectTransform rectTranform;
     public Canvas canvas;
     private CanvasGroup canvasGroup;
-    private Vector3 originalPos;
+    public Vector3 originalPos;
     public Vector3 lastPos;
     public bool used;
  private int instruc;
@@ -22,11 +22,11 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     {
         instruc = i;
     }
-    private void Awake()
+    private void Start()
     {
         rectTranform = GetComponent<RectTransform>();
         originalPos = transform.position;
-        lastPos = transform.position;
+        lastPos = originalPos;
         used = false;
         canvasGroup = GetComponent<CanvasGroup>();
         instruc = 0;
@@ -50,6 +50,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         canvasGroup.blocksRaycasts = true;
 
         transform.position = used ? lastPos: originalPos;
+        
         used = false;
     }
 
